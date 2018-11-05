@@ -136,12 +136,14 @@ module Macr0t
   LETTERS = ('a'..'z').to_a.map(&.to_s)
 end
 
-[
-  Macr0t::PREFIXES,
-  Macr0t::NUMBERS,
-  Macr0t::LETTERS,
-].each do |list|
-  print list.shuffle.first
-end
+(ARGV[0]?.try(&.to_i) || 1).times do
+  [
+    Macr0t::PREFIXES,
+    Macr0t::NUMBERS,
+    Macr0t::LETTERS,
+  ].each do |list|
+    print list.shuffle.first
+  end
 
-puts
+  puts
+end
