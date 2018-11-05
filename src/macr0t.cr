@@ -1,6 +1,17 @@
 module Macr0t
   VERSION = {{ `shards version #{__DIR__}`.chomp.stringify }}
 
+  USAGE = <<-U
+  $ macr0t [OPTION | COUNT]
+
+    OPTION:
+    -h, --help        show this help
+    -c, --continuous  continuously run until ^C
+
+    COUNT             how many names to generate
+                      (defaults to 1)
+  U
+
   PREFIXES = %w(
     a
     Afro
@@ -130,20 +141,27 @@ module Macr0t
     with
     y
   )
-
   NUMBERS = (0..9).to_a.map(&.to_s)
-
   LETTERS = ('a'..'z').to_a.map(&.to_s)
+
+  def self.generate
+    String.build do |s|
+      [
+        Macr0t::PREFIXES,
+        Macr0t::NUMBERS,
+        Macr0t::LETTERS,
+      ].each do |list|
+        s << list.shuffle.first
+      end
+    end
+  end
 end
 
-(ARGV[0]?.try(&.to_i) || 1).times do
-  [
-    Macr0t::PREFIXES,
-    Macr0t::NUMBERS,
-    Macr0t::LETTERS,
-  ].each do |list|
-    print list.shuffle.first
+case ARGV[0]?
+when "-h", "--help"       then puts Macr0t::USAGE
+when "-c", "--continuous" then loop { puts Macr0t.generate }
+else
+  (ARGV[0]?.try(&.to_i) || 1).times do
+    puts Macr0t.generate
   end
-
-  puts
 end
