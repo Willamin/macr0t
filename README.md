@@ -2,7 +2,7 @@
 
 ## Usage
 
-Generates a project name in the form <PREFIX><NUMBER><LETTER>. Probably the same terrible method neo4j used to determine their name. 
+Generates a project name in the form `<PREFIX><NUMBER><LETTER>`. Probably the same terrible method neo4j used to determine their name. 
 
 ```
   $ bin/macr0t [OPTION | COUNT]
